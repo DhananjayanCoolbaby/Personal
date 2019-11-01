@@ -1,0 +1,35 @@
+﻿EmployeeModule.controller("AddVendorDetails", ["$scope", "$http", "EmployeeFactory", function ($scope, $http, EmployeeFactory) {
+
+    $scope.SubmitData = function () {
+        var oVendorname = $scope.ngVendorname;
+        var oVendorId = $scope.ngVendorId;
+        var oVendorContactNO = $scope.ngVendorContactNO;
+        var oVendorEmail = $scope.ngVendorEmail;
+        var VendorData = {}
+        EmployeeFactory.PostServiceCall(urlpro + '/SaveVendorData/', VendorData).then(function (response) {
+            $scope.SusMessage = "Data has been Saved successfully";
+            $scope.alertsuccess = false;
+            $scope.TS_Getsavedcwrdetailes();
+        });
+    }
+
+    $scope.RedirectToADDCWR = function () {
+        debugger;
+        var UserID = "admin";
+        var Userlevel = "l1";
+        window.location.href = "Admin?Username=" + UserID + '&Userlevel=' + Userlevel;
+    };
+    $scope.RedirectToVendor = function () {
+        debugger;
+        var UserID = "admin";
+        var Userlevel = "l1";
+        window.location.href = "AddVendorDetails";
+    };
+    $scope.RedirectToReporting = function () {
+        debugger;
+        var UserID = "admin";
+        var Userlevel = "l1";
+        window.location.href = "AddReporting";
+    };
+
+}]);

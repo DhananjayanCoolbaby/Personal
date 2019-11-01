@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Index";
+    CWR.Entity.AssociateDetail associateDetails = ViewBag.associateDetails;
+
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login </title>
+    <link href="~/Content/custom-style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    @*<script src="~/Scripts/angular.js"></script>*@
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.google.com/uds/api/visualization/1.0/40ff64b1d9d6b3213524485974f36cc0/format+en,default+en,ui+en,corechart+en.I.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+
+
+    <style>
+        .agileits-top {
+            margin-top: 300px;
+        }
+
+        .body {
+            background-color: #f5f5f5 !important;
+        }
+    </style>
+
+    <script>
+        var url = "@Url.Content("~/Home")";
+        associateId = "@associateDetails.AssociateId.ToString()";
+
+    </script>
+</head>
+
+
+<body>
+    <!-- main -->
+    <div class="w3layouts-main" data-ng-app="EmployeeModule" data-ng-controller="EmployeeController" style="background-color: #f5f5f5 !important; ">
+        <div class="agilesign-form" style="margin-left: 500px;margin-top: 300px;">
+            <div class="agileits-top" style=" margin-top: 0px !important">
+                @*<form method="post" onsubmit="return validateFun()" action="index.html">*@
+                <div class="errmsg" id="errorMsgId">
+                    <span class='errmsg'>Invalid Username and Password</span>
+                </div>
+                <div class="styled-input w3ls-text user-div">
+                    <input class="form-control" type="text" name="User Name" id='uname' placeholder='User Name' data-ng-model="username">
+                    <i class="fa fa-user icon_fa" aria-hidden="true"></i>
+                </div>
+                <div class="styled-input w3ls-text">
+                    <input class="form-control" type="password" name="Password" id='pass' value='' placeholder='Password' data-ng-model="password">
+                    <i class="fa fa-key icon_fa" aria-hidden="true"></i>
+                </div>
+
+                <div class="agileits-bottom">
+                    <input type="submit" class="submit" value="Sign In" id="submitClick">
+                </div>
+                @*</form>*@
+            </div>
+            <div class="w3agile-btm">
+            </div>
+        </div>
+    </div>
+    <!-- //main -->
+</body>
+
+
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitClick").click(function () {
+            debugger;
+            var Username = $('#uname').val();
+            var password = $('#pass').val();
+            var UNamePName = {
+                Username: Username,
+                password: password
+            }
+           
+            $.ajax({
+
+                type: 'POST',
+                url: '@Url.Action("CheckUserName", "Home")',
+                data: JSON.stringify(UNamePName),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    if (response[0].Access == 1) {
+                        debugger;                       
+                        window.location.href = "/AddVendorDetails";
+
+                    }
+                    else {
+                        window.location.href = "Erro/Index";
+                    }
+                },
+                error: function () {
+                    alert("Something wrong");
+                }
+
+            });
+        });
+
+    });
+    function validateFun() {
+        if (document.getElementById('uname').value == "") {
+            document.getElementById('uname').style.border = "2px solid red";
+            document.getElementById('pass').style.border = "1px solid #C2C2A3";
+            document.getElementById('selectcomp').style.border = "1px solid #C2C2A3";
+            document.getElementById('uname').focus();
+            return false;
+        }
+        else if (document.getElementById('pass').value == "") {
+            document.getElementById('uname').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').style.border = "2px solid red";
+            document.getElementById('selectcomp').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').focus();
+            return false;
+        }
+        else if (document.getElementById('selectcomp').value == "") {
+            document.getElementById('uname').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').style.border = "1px solid #C2C2A3";
+            document.getElementById('selectcomp').style.border = "2px solid red";
+            document.getElementById('selectcomp').focus();
+            return false;
+        }
+        else if (document.getElementById('uname').value != document.getElementById('pass').value) {
+            document.getElementById('errorMsgId').style.visibility = "visible";
+            document.getElementById('uname').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').style.border = "1px solid #C2C2A3";
+            document.getElementById('selectcomp').style.border = "1px solid #C2C2A3";
+            document.getElementById('uname').focus();
+            return false;
+        }
+    }
+    $('.form-control').on('blur', function () {
+        if ($(this).val() == '') {
+            $(this).css('border', '2px solid red');
+        } else {
+            $(this).css('border', '1px solid #C2C2A3');
+        }
+    });
+</script>
+

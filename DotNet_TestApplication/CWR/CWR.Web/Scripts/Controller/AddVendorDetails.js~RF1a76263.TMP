@@ -1,0 +1,13 @@
+﻿EmployeeModule.controller("AddVendorDetails", ["$scope", "$http", "EmployeeFactory", function ($scope, $http, EmployeeFactory) {
+    
+    $scope.SaveVendor = function () {
+        alert("Coolbaby");
+    }
+
+    $scope.RedirectToADDCWR = function () {
+        debugger;
+        window.location.href = "Admin";
+    };
+
+
+}]);

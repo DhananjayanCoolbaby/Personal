@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "Index";
+
+}
+
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login </title>
+    <link href="~/Content/custom-style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    @*<script src="~/Scripts/angular.js"></script>*@
+    <script src="~/Scripts/angular.min.js"></script>
+
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/EmployeeController.js"></script>
+
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+    <style>
+        .agileits-top {
+            margin-top: 300px;
+        }
+        .body {
+            background-color: #f5f5f5 !important;
+        }
+    </style>
+
+    
+</head>
+
+<body>
+    <script>
+        var urlpro = "@Url.Content("~/Home")";
+        associateId = " @ViewBag.UserID";
+    </script>
+    <!-- main -->
+    <div class="w3layouts-main" align="center" data-ng-app="EmployeeModule" data-ng-controller="EmployeeController">
+
+        <div class="agilesign-form">
+            <div class="agileits-top">
+
+                <div class="errmsg" id="errorMsgId">
+                    <span class='errmsg'>Invalid Username and Password</span>
+                </div>
+                <div class="styled-input w3ls-text user-div">
+                    <input class="form-control" type="text" name="User Name" id='uname' placeholder='User Name' data-ng-model="UserName">
+
+                    <i class="fa fa-user icon_fa" aria-hidden="true"></i>
+                </div>
+                <div class="styled-input w3ls-text">
+                    <input class="form-control" type="password" name="Password" id='pass' value='' placeholder='Password'>
+                    <i class="fa fa-key icon_fa" aria-hidden="true"></i>
+                </div>
+
+                <div class="agileits-bottom">
+                    <input type="submit" class="submit" value="Sign In" data-ng-click="Test()">
+                </div>
+
+            </div>
+            <div class="w3agile-btm">
+            </div>
+        </div>
+    </div>
+    <!-- //main -->
+</body>
+<script type="text/javascript">
+    function validateFun() {
+
+        if (document.getElementById('uname').value == "") {
+            alert(12);
+            document.getElementById('uname').style.border = "2px solid red";
+            document.getElementById('pass').style.border = "1px solid #C2C2A3";
+            document.getElementById('selectcomp').style.border = "1px solid #C2C2A3";
+            document.getElementById('uname').focus();
+            return false;
+        }
+        else if (document.getElementById('pass').value == "") {
+            document.getElementById('uname').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').style.border = "2px solid red";
+            document.getElementById('selectcomp').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').focus();
+            return false;
+        }
+        else if (document.getElementById('selectcomp').value == "") {
+            document.getElementById('uname').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').style.border = "1px solid #C2C2A3";
+            document.getElementById('selectcomp').style.border = "2px solid red";
+            document.getElementById('selectcomp').focus();
+            return false;
+        }
+        else if (document.getElementById('uname').value != document.getElementById('pass').value) {
+            document.getElementById('errorMsgId').style.visibility = "visible";
+            document.getElementById('uname').style.border = "1px solid #C2C2A3";
+            document.getElementById('pass').style.border = "1px solid #C2C2A3";
+            document.getElementById('selectcomp').style.border = "1px solid #C2C2A3";
+            document.getElementById('uname').focus();
+            return false;
+        }
+    }
+    $('.form-control').on('blur', function () {
+        if ($(this).val() == '') {
+            $(this).css('border', '2px solid red');
+        } else {
+            $(this).css('border', '1px solid #C2C2A3');
+        }
+    });
+</script>
+</html>

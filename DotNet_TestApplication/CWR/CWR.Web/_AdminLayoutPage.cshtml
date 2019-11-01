@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CWR</title>
+    <!-- Global stylesheets -->
+
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/styles.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/core.css" rel="stylesheet" />
+    <link href="~/Content/components.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/AdminController.js"></script>
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/jquery.cycle.all.js"></script>
+
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+
+    <style>
+        .control-label, .input-sm {
+            width: 5.6%;
+            float: left;
+            margin-left: 5px;
+            text-align: center;
+        }
+
+        .padzero {
+            padding: 0px !important;
+        }
+
+        .m-b-10 {
+            margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+
+<body class=" pace-done" data-ng-app="EmployeeModule" data-ng-controller="AdminController" data-ng-init="TS_Getsavedcwrdetailes()">
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" style="transform: translate3d(100%, 0px, 0px);" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity">
+        </div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-default header-highlight">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"></a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                <li><a class="sidebar-control sidebar-main-toggle hidden-xs mt-25"><i class="icon-paragraph-justify3 font-32"></i></a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="mt-25"><a href="http://demo.qmentix.com/bible/site/logout"><i class="icon-switch2"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        @*<div class="alert alert-danger  fade in" style="margin-left: 323px;" ng-hide="alertdanger">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                <strong>Error!</strong> A <a href="#" class="alert-link">problem</a> has been occurred while submitting your data.
+            </div>
+            <div class="alert alert-success fade in" style="margin-left: 323px;" ng-hide=" alertsuccess">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                <strong>Success!</strong> Your <a href="#" class="alert-link">message</a> has been sent successfully.
+            </div>*@
+
+    </div>
+    <div class="page-container" style="min-height:609px">
+
+        <div class="page-content">
+            <div class="sidebar sidebar-main" style="height: 700px;">
+                <div class="sidebar-content">
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
+                                <li class="navigation-header">
+                                    <span>
+                                        Main
+                                    </span> <i class="icon-menu" title="" data-original-title="Main pages"></i>
+                                </li>
+                                <li class="active">
+                                    <a href="#" class="has-ul"><i class="icon-user"></i> <span>Admin</span></a>
+                                    <ul>
+                                        @*@if (@HttpContext.Current.Session["Userlevel"].ToString() == "l1")
+                                            {*@
+                                        <li class=""><a href="/Admin/Index">Add Reportee</a></li>
+                                        @*}*@
+                                        <li class=""><a href="empty.html">Create Admin</a></li>
+                                        <li class="">
+                                            <a href="/EmpRegister/Index">
+                                                Employee Register
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-people"></i> <span>Users</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="details.html">Manage Users</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-pencil"></i> <span>Author</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="#">Manage Author</a></li>
+                                        <li class=""><a href="#">Create Author</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-copy"></i> <span>Feeds</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="#">Manage Feeds</a></li>
+                                        <li class=""><a href="#">Create Feeds</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Ads</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="#">Manage Ads</a></li>
+                                        <li class=""><a href="#">Create Ads</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Menu6</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="#">Manage Ads</a></li>
+                                        <li class=""><a href="#">Create Ads</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Menu7</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="#">Manage Ads</a></li>
+                                        <li class=""><a href="#">Create Ads</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Menu8</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="#">Manage Ads</a></li>
+                                        <li class=""><a href="#">Create Ads</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Menu9</span></a>
+                                    <ul class="hidden-ul">
+                                        <li class=""><a href="#">Manage Ads</a></li>
+                                        <li class=""><a href="#">Create Ads</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-parent ">
+                                    <a href="#" class="has-ul"><i class="icon-stack2"></i> <span>Menu10</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="panel panel-flat">
+                        <div class="panel-body">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+
+            </script>
+        </div>
+    </div>
+</body>
+</html>

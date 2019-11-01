@@ -1,0 +1,399 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CWR</title>
+    <!-- Global stylesheets -->
+    @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css">*@
+    <!-- <link href="~/Content/jquery-ui.css" rel="stylesheet" />-->
+    <link href="~/Content/styles.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/core.css" rel="stylesheet" />
+    <link href="~/Content/components.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/AdminController.js"></script>
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/jquery.cycle.all.js"></script>
+    @*<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>*@
+
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+
+    <style>
+        .control-label, .input-sm {
+            width: 5.6%;
+            float: left;
+            margin-left: 5px;
+            text-align: center;
+        }
+
+        .padzero {
+            padding: 0px !important;
+        }
+
+        .m-b-10 {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>var urlpro = "@Url.Content("~/Admin")";</script>
+</head>
+
+<body class=" pace-done" data-ng-app="EmployeeModule" data-ng-controller="AdminController" data-ng-init="TS_Getsavedcwrdetailes()">
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" style="transform: translate3d(100%, 0px, 0px);" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity">
+        </div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-default header-highlight">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"></a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                <li><a class="sidebar-control sidebar-main-toggle hidden-xs mt-25"><i class="icon-paragraph-justify3 font-32"></i></a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="mt-25"><a href="http://demo.qmentix.com/bible/site/logout"><i class="icon-switch2"></i> Logout</a></li>
+            </ul>
+        </div>
+
+
+
+    </div>
+    <div class="page-container" style="min-height:609px">
+
+        <div class="page-content">
+            <div class="sidebar sidebar-main" style="height: 700px;">
+                <div class="sidebar-content">
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
+                                <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="" data-original-title="Main pages"></i></li>
+                                <li class="active">
+                                    <a href="#" class="has-ul"><i class="icon-user"></i> <span>Admin</span></a>
+                                    <ul>
+                                        <li class="active"><a href="/Admin/Index">Add Reportees</a></li>
+                                        <li class=""><a href="empty.html">Create Admin</a></li>
+                                        <li class="">
+                                            @*<a href="@Url.Action("Index", "EmpRegister", new { id = 12 })" title="Edit">*@
+                                            <a href="/EmpRegister/Index">
+                                                Employee Register
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @*<li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-people"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="details.html"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-pencil"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="#"></a></li>
+                                            <li class=""><a href="#"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-copy"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="#"></a></li>
+                                            <li class=""><a href="#"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-stack2"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="#"></a></li>
+                                            <li class=""><a href="#"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-stack2"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="#"></a></li>
+                                            <li class=""><a href="#"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-stack2"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="#"></a></li>
+                                            <li class=""><a href="#"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-stack2"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="#"></a></li>
+                                            <li class=""><a href="#"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-stack2"></i><span></span></a>
+                                        <ul class="hidden-ul">
+                                            <li class=""><a href="#"></a></li>
+                                            <li class=""><a href="#"></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-parent ">
+                                        <a href="#" class="has-ul"><i class="icon-stack2"></i><span></span></a>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="panel panel-flat">
+                        <div class="panel-body">
+                            <div class="alert alert-danger   " ng-hide="alertdanger">
+                                <a href="#" class="close" data-dismiss="alert">×</a>
+                                <strong>Error!</strong>  <a href="#" data-ng-bind="FailMessage" class="alert-link"></a>
+                            </div>
+                            <div class="alert alert-success  " ng-hide=" alertsuccess">
+                                <a href="#" class="close" data-dismiss="alert">×</a>
+                                <strong>Success!</strong> Your <a data-ng-bind="SusMessage" href="#" class="alert-link"></a>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>User Name</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" data-ng-model="ngUsername" id="" type="text">
+                                </div>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" id="" data-ng-model="ngName" type="text">
+                                </div>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>JoiningDate</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" type="text" id="start_date" readonly data-ng-model="ngJoiningDate" datepicker="datepicker">
+                                </div>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Position</label>
+                                </div>
+                                <div class="col-lg-8">
+
+                                    <select id="ddlPosition" class="form-control" ng-model="ngPosition" data-ng-init="GetPosition()">
+                                        @*ng-options="Position.Name for Position in FetchPositionDetiles">*@
+                                        <option disabled selected value="">--Select--</option>
+                                        <option ng-repeat="Position in FetchPositionDetiles" value="{{Position.ID}}">{{Position.Name}}</option>
+                                    </select>
+
+                                    @*<select class="form-control" data-ng-model="ngPosition" data-ng-init="GetPosition()">
+                                            <option disabled selected value="">--Select--</option>
+                                            <option data-ng-repeat="Position in FetchPositionDetiles" value="ID">{{Position.Name}}</option>
+
+                                        </select>*@
+                                </div>
+                            </div>
+
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Father Name</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" data-ng-model="ngFatherName" id="" required type="text">
+                                </div>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Date of Birth: </label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" type="text" id="end_date" required readonly data-ng-model="ngDOB" datepicker1="datepicker1">
+                                </div>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Address</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <textarea data-ng-model="ngAddress" required class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Mobile No: </label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" maxlength="10" required numbers-only data-ng-model="ngMobileNo" id="" type="text">
+                                </div>
+                            </div>
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Gender:</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" required data-ng-model="ngGender">
+                                        <option disabled selected value="">--Select--</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Email Address: </label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" required data-ng-model="ngEmail" id="" type="text">
+                                </div>
+                            </div>
+
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Reporting to :</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" required data-ng-model="ngReporting" id="" type="text">
+                                </div>
+                            </div>
+
+                            <div class="padzero col-lg-12 m-b-10">
+                                <div class="col-lg-2">
+                                    <label>State</label>
+                                </div>
+                                <div class="col-lg-4">
+
+                                    <select id="ddlState" class="form-control" required ng-model="ngState" data-ng-init="GetState()">
+                                        <option disabled selected value="">--Select--</option>
+                                        <option ng-repeat="state in FetchStateDetiles" value="{{state.ID}}">{{state.Name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>Postcode:</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" required maxlength="6" name="txtAccountNumber" numbers-only ng-model="ngPostcode">
+                                    @*<input class="form-control" data-ng-model="ngPostcode" id="" name="number" min="0" max="99" type="number">*@
+                                </div>
+                            </div>
+
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>User Level:</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" required data-ng-model="ngUserLevel">
+                                        <option disabled selected value="">--Select--</option>
+                                        <option value="l3">Level III</option>
+                                        <option value="l2">Level II</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="padzero col-lg-6 m-b-10">
+                                <div class="col-lg-4">
+                                    <label>User Password:</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input class="form-control" required data-ng-model="ngPassword" id="" type="text">
+                                </div>
+                            </div>
+
+
+
+                            <div class="padzero col-lg-12 m-b-10">
+                                <div class="col-lg-2">
+
+                                </div>
+                                <div class="col-lg-4">
+                                    <button class="btn danger" type="submit" data-ng-click="SubmitData(Username);">Submit</button>
+                                    <button class="btn danger">Cancel</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('#slider1').cycle({
+                        fx: 'fade', // here change effect to blindX, blindY, blindZ etc
+                        speed: 'slow',
+                        timeout: 2000
+                    });
+                    $("#nav-image").hide();
+                    $(".nav_icon").click(function () {
+                        $("#nav-image").fadeToggle();
+                    });
+                });
+            </script>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="col-lg-12 m-b-10 table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Name</th>
+                    <th>Joining Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat=" cwrdata in savedcwrdetailes ">
+                    <td> <a ng-href="" ng-click=" rebindingcwrdata(cwrdata.UserName);" style="cursor:pointer">{{cwrdata.UserName}} </a> </td>
+                    <td>{{cwrdata.Name}}</td>
+                    <td>{{cwrdata.JoiningDate}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

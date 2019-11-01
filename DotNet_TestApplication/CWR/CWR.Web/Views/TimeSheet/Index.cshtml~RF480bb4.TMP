@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "TimeSheet";
+}
+@model List<CWR.Entity.TimeSheet>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login </title>
+    <link href="~/Content/custom-style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    @*<script src="~/Scripts/angular.js"></script>*@
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/TimeSheetController.js"></script>
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+
+
+
+    <style>
+        .control-label, .input-sm {
+            width: 5.6%;
+            float: left;
+            margin-left: 5px;
+            text-align: center;
+        }
+
+        .padzero {
+            padding: 0px !important;
+        }
+    </style>
+    <script>var urlpro = "@Url.Content("~/TimeSheet")";</script>
+</head>
+
+
+<body class=" pace-done" data-ng-app="EmployeeModule" data-ng-controller="TimeSheetController" data-ng-init="TS_GetSavedTimeSheetDetailes()">
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" style="transform: translate3d(100%, 0px, 0px);" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity">
+        </div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-default header-highlight">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"></a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+
+
+    </div>
+    <div class="page-container" style="min-height:609px">
+        <div class="page-content">
+
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="panel panel-flat">
+                        <div class="panel-body">
+                            <div class="padzero col-lg-12">
+                                <div class="col-lg-4">
+                                    <span>Name:</span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <input class="form-control" id="inputsm" type="text" placeholder="Month">
+                                </div>
+                                <div class="col-lg-4">
+                                    <input class="form-control" id="inputsm" type="text" placeholder="Year">
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:20px;">
+                                <div class="col-lg-12" style="text-indent: 5em;">
+                                    <label> Legents:  X-Present,   V-1/2 Leave,       L-Leave,     B-1/2 Absent,    A-Absent,     W-Weekly-off,        P-Public Holiday,        H-Holiday </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-12 padzero">
+                                    <div class="col-lg-12 padzero">
+                                        <label for="inputPassword" data-timesheetperiodid="{{data.TimesheetPeriodid}}" data-ng-repeat="data in FetchDateDetails" id="date_{{data.Date}}" data-date="{{data.DateWorked}}" class="control-label">{{data.Date}}<span>-{{data.Days}}</span> </label>
+
+                                    </div>
+                                    <div class="col-lg-12 padzero">
+
+
+                                        <div data-ng-repeat="data in FetchDateDetails">
+                                            <div ng-if="'Sun'== data.Days || 'Sat' == data.Days">
+                                                <span>
+                                                    <span><input class="form-control input-sm" id="timeval_{{data.Date}}" ng-model="TimeSheetVal[$index]" ng-disabled=" true" type="text"></span>
+                                                </span>
+                                            </div>
+                                            <div ng-if="'Sun'!= data.Days && 'Sat' != data.Days">
+                                                <span>
+    
+
+
+                                                    <select class="form-control input-sm" id="timeval_{{data.Date}}" ng-disabled="data.RequestId" ng-model="ddlSelectVal[data]" ng-init="ddlSelectVal[data]=data.ProjectHoursWorked" data-ng-change="SaveTime(data.Date);">
+                                                        <option value="">-Select-</option>
+                                                        <option data-ng-repeat="s in FetchLegendDetails" value="{{s.LegendShortName}}" ng-selected="s.LegendShortName == ddlSelectVal[data]">
+                                                            {{s.LegendName}}
+                                                    </select>
+                                                    @*<option ng-repeat="s in FetchLegendDetails" data-value="s.LegendShortName" ng-model="selitem" ng-change="SaveTime(data.Date);">
+                                                    *@
+
+                                                </span>
+                                            </div>
+
+                                            @*<div ng-if="'Sun'== data.Days || 'Sat' == data.Days">
+                                                    <span><input class="form-control input-sm" id="timeval_{{data.Date}}" ng-model="TimeSheetVal[$index]" ng-disabled=" true" type="text"></span>
+                                                </div>
+
+                                                <div ng-if="'Sun'!= data.Days && 'Sat' != data.Days">
+
+                                                    <span><input class=" form-control input-sm" id="timeval_{{data.Date}}" ng-model="TimeSheetVal[$index]" ng-model-onblur ng-change="SaveTime(data.Date);" type="text"></span>
+                                                </div>*@
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 padzero text-right" style="margin-top:20px;">
+                                    <button type="button" class="btn btn-primary" data-ng-click="SubmitTimeSheet();">Primary</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:20px;">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Time Report ID</th>
+                                            <th>Empl ID</th>
+                                            <th>Period End Date</th>
+                                            <th>Time Report Status</th>
+                                            <th>Creation Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="GropData in SavedTimeSheetDetailes">
+                                            <td> <a ng-href="" ng-click="RebindingTimeSheetData(GropData.RequestId);" style="cursor:pointer"> {{GropData.RequestId}} </a> </td>
+                                            <td>{{GropData.CWRID}}</td>
+                                            <td>{{GropData.EndDate}}</td>
+                                            <td>{{GropData.Status}}</td>
+                                            <td>{{GropData.CreatedDate}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //$(document).ready(function () {
+        //    $('#slider1').cycle({
+        //        fx: 'fade', // here change effect to blindX, blindY, blindZ etc
+        //        speed: 'slow',
+        //        timeout: 2000
+        //    });
+        //    $("#nav-image").hide();
+        //    $(".nav_icon").click(function () {
+        //        $("#nav-image").fadeToggle();
+        //    });
+        //});
+    </script>
+</body>
+</html>

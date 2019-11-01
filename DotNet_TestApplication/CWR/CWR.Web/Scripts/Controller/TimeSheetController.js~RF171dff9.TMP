@@ -1,0 +1,62 @@
+﻿
+
+
+EmployeeModule.controller("TimeSheetController", ["$scope", "$http", "EmployeeFactory", function ($scope, $http, EmployeeFactory) {
+
+    $scope.FetchDateDetails = [];
+    EmployeeFactory.PostServiceCall(urlpro + '/FetchDateDetails/').then(function (response) {
+        for (i = 0; i < response.data.length; ++i) {
+            $scope.FetchDateDetails.push(response.data[i]);
+        }
+    });
+
+    $scope.FetchDateDetails = [];
+
+   
+    var pocvalListsave = $scope.Poclist;
+
+    $scope.SubmitTimeSheet = function () {
+        debugger;
+        $scope.tempSaveArray = [];
+        var lentextbox = $scope.FetchDateDetails.length;
+        for (var i = 0; i < lentextbox; i++) {
+            var strval = $scope.FetchDateDetails[i].Date;
+            var txtboxval = $('#timeval_' + strval).val();
+            var dateval = $('#date_' + strval).data("date");
+            var TimeSheetID = $('#date_' + strval).data("timesheetperiodid");
+            var timeSheetdata = {
+                DateWorked: dateval,
+                TimeSheetVal: txtboxval,
+                TimesheetPeriodid: TimeSheetID
+            }
+            $scope.tempSaveArray.push(timeSheetdata);
+        }
+        var TimeSheetarray = $scope.tempSaveArray;
+        EmployeeFactory.PostServiceCall(urlpro + '/SaveTimeSheetDetails/', TimeSheetarray).then(function (response) {
+        });
+
+
+    }
+    $scope.TimeList = [];
+    $scope.SaveTime = function (date) {
+
+        var txtboxval = $('#timeval_' + date).val();
+        var dateval = $('#date_' + date).data("date");
+        var TimeSheetID = $('#date_' + date).data("timesheetperiodid");
+
+        // var date = dateval.split("-");
+        var TimeSavedata = {
+            Date: dateval,
+            TimeSheetVal: txtboxval,
+            TimesheetPeriodid: TimeSheetID
+        }
+        EmployeeFactory.PostServiceCall(urlpro + '/SavedaybydateTime/', TimeSavedata).then(function (response) {
+
+
+        });
+
+    }
+
+
+
+}]);

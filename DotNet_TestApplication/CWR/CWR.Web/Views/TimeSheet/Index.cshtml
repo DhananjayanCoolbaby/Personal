@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "TimeSheet";
+    CWR.Entity.AssociateDetail associateDetails = ViewBag.associateDetails;
+}
+@model List<CWR.Entity.TimeSheet>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login </title>
+
+
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <link href="~/Content/jquery.multiselect.css" rel="stylesheet" />
+    <link href="~/Content/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <link href="~/Content/custom-style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/TimeSheetController.js"></script>
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+    <style>
+        .control-label, .input-sm {
+            margin-left: 5px;
+            text-align: center;
+        }
+
+        .float-left {
+            float: left;
+            padding: 5px 10px;
+            width: 6.6%;
+        }
+
+        .padzero {
+            padding: 0px !important;
+        }
+
+        .m-t-10 {
+            margin-top: 20px;
+        }
+
+        [type="date"] {
+            background: #fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png) 97% 50% no-repeat;
+        }
+
+            [type="date"]::-webkit-inner-spin-button {
+                display: none;
+            }
+
+            [type="date"]::-webkit-calendar-picker-indicator {
+                opacity: 0;
+            }
+
+
+
+        label {
+            display: block;
+        }
+
+
+        .ui-datepicker-today {
+            background: blue;
+        }
+
+        .ui-datepicker-calendar {
+            display: none;
+        }
+    </style>
+    <script>
+        var urlpro = "@Url.Content("~/TimeSheet")";
+        associateId = "@associateDetails.AssociateId.ToString()";
+    </script>
+</head>
+
+<body class=" pace-done" data-ng-app="EmployeeModule" data-ng-controller="TimeSheetController" data-ng-init="TS_GetSavedTimeSheetDetailes();FetchDateDetailsBasedOnassociateId()">
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" style="transform: translate3d(100%, 0px, 0px);" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity">
+        </div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-default header-highlight">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"></a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+
+
+    </div>
+    <div class="page-container" style="min-height:609px">
+        <div class="page-content">
+
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="panel panel-flat">
+                        <div class="panel-body">
+                            <div class="padzero col-lg-12">
+                                <div class="col-lg-4">
+                                    <span>Name:</span><p data-ng-model="ngassociateId"></p>
+                                </div>
+                                <div class="col-lg-8 text-right">
+                                    <span>Filter</span>
+                                    @*<input name="startDate" class="inputdate_small textstyle date-picker" id="startDate" data-ng-model="SDateValue" data-ng-change="PickDataBasedOnDate(SDateValue)">*@
+                                    <input type="text" class="inputdate_small textstyle date-picker" id="start_date" readonly data-ng-model="vstartdate" datepicker="datepicker" data-ng-change=" PickDataBasedOnDate(vstartdate)">
+
+                                </div>
+
+                                <div class="padzero col-lg-12">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12 m-t-10">
+                                        <label> Legents:  X-Present,   V-1/2 Leave,       L-Leave,     B-1/2 Absent,    A-Absent,     W-Weekly-off,        P-Public Holiday,        H-Holiday </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 m-t-10">
+                                    <div class="col-lg-12 padzero">
+
+                                        <div class="col-lg-12 padzero">
+                                            <div data-ng-repeat="data in FetchDateDetails" class="float-left">
+
+                                                <label for="inputPassword" data-timesheetperiodid="{{data.TimesheetPeriodid}}" id="date_{{data.Date}}" data-date="{{data.DateWorked}}" class="control-label">{{data.Date}}<span>-{{data.Days}}</span> </label>
+
+
+                                                <div ng-if="'Sun'== data.Days || 'Sat' == data.Days">
+                                                    <span>
+                                                        <span><input class="form-control input-sm" id="timeval_{{data.Date}}" value="W" ng-model="TimeSheetVal[$index]" ng-disabled=" true" type="text"></span>
+                                                    </span>
+                                                </div>
+                                                <div ng-if="'Sun'!= data.Days && 'Sat' != data.Days">
+                                                   
+                                                    <span>
+                                                        <select class="form-control input-sm" id="timeval_{{data.Date}}" ng-disabled="((data.RequestId)&&(data.Status!=2))" ng-model="ddlSelectVal[data]" ng-init="ddlSelectVal[data]=data.ProjectHoursWorked" data-ng-change="SaveTime(data.Date);">
+                                                            <option value="">-Select-</option>
+                                                            <option data-ng-repeat="s in FetchLegendDetails" value="{{s.LegendShortName}}" ng-selected="s.LegendShortName == ddlSelectVal[data]">
+                                                                {{s.LegendName}}
+                                                        </select>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 m-t-10">
+                                            <textarea rows="4" cols="50" ng-model="ngComments"></textarea>
+                                        </div>
+
+
+                                        <div class="col-lg-12 padzero text-right" style="margin-top:20px;">
+                                            <button type="button" class="btn btn-primary" ng-disabled="((FetchDateDetails[0].RequestId)&&(FetchDateDetails[0].Status!=2)) " data-ng-click="SubmitTimeSheet();">Submit</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" style="margin-top:20px;">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Time Report ID</th>
+                                                    <th>Empl ID</th>
+                                                    <th>Period End Date</th>
+                                                    <th>Time Report Status</th>
+                                                    <th>Creation Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr data-ng-repeat="GropData in SavedTimeSheetDetailes">
+                                                    <td> <a ng-href="" ng-click="RebindingTimeSheetData(GropData.RequestId);" style="cursor:pointer"> {{GropData.RequestId}} </a> </td>
+                                                    <td>{{GropData.CWRID}}</td>
+                                                    <td>{{GropData.EndDate |date:'MMM dd, yyyy'}}</td>
+                                                    <td>{{GropData.Status}}</td>
+                                                    <td>{{GropData.CreatedDate}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+               
+            </script>
+        </div>
+    </div>
+</body>
+</html>

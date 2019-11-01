@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "www.compilemode.com";
+}
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+    $(document).ready(function () {
+        //Call EmpDetails jsonResult Method          
+
+        $.getJSON("AddVendorDetails/GetSavedVendorDetailes",
+        function (json) {
+            var tr;
+            //Append each row to html table
+            for (var i = 0; i < json.Data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + json.Data[i].VendorContactNO + "</td>");
+                tr.append("<td>" + json.Data[i].VendorEmail + "</td>");
+                tr.append("<td id=" + json.Data[i].VendorID + " ><p><a class=\'showMore\' href=#>" + json.Data[i].VendorID + "</a></p></td>");
+                tr.append("<td>" + json.Data[i].Vendorname + "</td>");
+                tr.append("<td  id="+json.Data[i].VendorID+"><i class=\'fa fa-close\'></i></td>");
+                $('table').append(tr);
+            }
+        });
+    });
+</script>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>VendorContactNO</th>
+            <th>VendorEmail</th>
+            <th>VendorID</th>
+            <th>Vendorname</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>  

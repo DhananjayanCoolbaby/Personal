@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewBag.Title = "TimeSheet";
+}
+@model List<CWR.Entity.TimeSheet>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New project</title>
+    <!-- Global stylesheets -->
+
+
+    <link href="~/Content/styles.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/core.css" rel="stylesheet" />
+    <link href="~/Content/components.css" rel="stylesheet" />
+    <!-- Global script files -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/jquery.cycle.all.js"></script>
+
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/EmployeeController.js"></script>
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+
+
+
+    <style>
+        .control-label, .input-sm {
+            width: 5.6%;
+            float: left;
+            margin-left: 5px;
+            text-align: center;
+        }
+
+        .padzero {
+            padding: 0px !important;
+        }
+    </style>
+</head>
+
+<body class=" pace-done">
+    <div class="pace  pace-inactive" data-ng-app="EmployeeModule" data-ng-controller="TimeSheetController">
+        <div class="pace-progress" style="transform: translate3d(100%, 0px, 0px);" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity">
+        </div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-default header-highlight">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"></a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+
+
+    </div>
+    <div class="page-container" style="min-height:609px">
+        <div class="page-content">
+
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="panel panel-flat">
+                        <div class="panel-body">
+                            <div class="padzero col-lg-12">
+                                <div class="col-lg-4">
+                                    <span>Name:</span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <input class="form-control" id="inputsm" type="text" placeholder="Month">
+                                </div>
+                                <div class="col-lg-4">
+                                    <input class="form-control" id="inputsm" type="text" placeholder="Year">
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:20px;">
+                                <div class="col-lg-12">
+                                    <label>Legents: X : V : L : B: A : W : P : H </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-12 padzero">
+
+                                    @foreach (var item in Model)
+                                    {
+                                        
+                                    }
+
+                                    @*<div class="col-lg-12 padzero">
+                                        <label class="control-label">1 sun</label>
+                                        <label for="inputPassword" class="control-label">2 mon</label>
+                                        <label for="inputPassword" class="control-label">3 tue</label>
+                                        <label for="inputPassword" class="control-label">4 wed</label>
+                                        <label for="inputPassword" class="control-label">5 thur</label>
+                                        <label for="inputPassword" class="control-label">6 fri</label>
+                                        <label for="inputPassword" class="control-label">7 sat</label>
+                                        <label for="inputPassword" class="control-label">8 sun</label>
+                                        <label for="inputPassword" class="control-label">9 mon</label>
+                                        <label for="inputPassword" class="control-label">10 tue</label>
+                                        <label for="inputPassword" class="control-label">11 wed</label>
+                                        <label for="inputPassword" class="control-label">12 thu</label>
+                                        <label for="inputPassword" class="control-label">13 fri</label>
+                                        <label for="inputPassword" class="control-label">14 fri</label>
+                                        <label for="inputPassword" class="control-label">15 fri</label>
+                                        <label for="inputPassword" class="control-label">16 fri</label>
+                                    </div>*@
+                                    <div class="col-lg-12 padzero">
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 padzero" style="margin-top:10px;">
+                                    <div class="col-lg-12 padzero">
+                                        <label class="control-label">1 sun</label>
+                                        <label for="inputPassword" class="control-label">2 mon</label>
+                                        <label for="inputPassword" class="control-label">3 tue</label>
+                                        <label for="inputPassword" class="control-label">4 wed</label>
+                                        <label for="inputPassword" class="control-label">5 thur</label>
+                                        <label for="inputPassword" class="control-label">6 fri</label>
+                                        <label for="inputPassword" class="control-label">7 sat</label>
+                                        <label for="inputPassword" class="control-label">8 sun</label>
+                                        <label for="inputPassword" class="control-label">9 mon</label>
+                                        <label for="inputPassword" class="control-label">10 tue</label>
+                                        <label for="inputPassword" class="control-label">11 wed</label>
+                                        <label for="inputPassword" class="control-label">12 thu</label>
+                                        <label for="inputPassword" class="control-label">13 fri</label>
+                                        <label for="inputPassword" class="control-label">14 fri</label>
+                                        <label for="inputPassword" class="control-label">15 fri</label>
+                                        <label for="inputPassword" class="control-label">16 fri</label>
+                                    </div>
+                                    <div class="col-lg-12 padzero">
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                        <span><input class="form-control input-sm" id="inputsm" type="text"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 padzero text-right" style="margin-top:20px;">
+                                    <button type="button" class="btn btn-primary">Primary</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top:20px;">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Firstname</th>
+                                            <th>Lastname</th>
+                                            <th>Email</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>John</td>
+                                            <td>Doe</td>
+                                            <td>john@example.com</td>
+                                            <td>j</td>
+                                            <td>View</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mary</td>
+                                            <td>Moe</td>
+                                            <td>mary@example.com</td>
+                                            <td>j</td>
+                                            <td>View</td>
+                                        </tr>
+                                        <tr>
+                                            <td>July</td>
+                                            <td>Dooley</td>
+                                            <td>july@example.com</td>
+                                            <td>j</td>
+                                            <td>View</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            alert(123);
+            $('#slider1').cycle({
+                fx: 'fade', // here change effect to blindX, blindY, blindZ etc
+                speed: 'slow',
+                timeout: 2000
+            });
+            $("#nav-image").hide();
+            $(".nav_icon").click(function () {
+                $("#nav-image").fadeToggle();
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

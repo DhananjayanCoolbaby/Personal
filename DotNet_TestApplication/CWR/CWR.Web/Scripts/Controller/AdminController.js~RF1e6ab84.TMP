@@ -1,0 +1,158 @@
+﻿EmployeeModule.controller("AdminController", ["$scope", "$http", "EmployeeFactory", function ($scope, $http, EmployeeFactory) {
+
+    $scope.GetState = function () {
+        $scope.FetchStateDetiles = [];
+
+        EmployeeFactory.PostServiceCall(urlpro + '/GetState/').then(function (response) {
+            for (i = 0; i < response.data.length; ++i) {
+                $scope.FetchStateDetiles.push(response.data[i]);
+            }
+        });
+    }
+
+    $scope.GetPosition = function () {
+        $scope.FetchPositionDetiles = [];
+
+        EmployeeFactory.PostServiceCall(urlpro + '/GetPosition/').then(function (response) {
+            for (i = 0; i < response.data.length; ++i) {
+                $scope.FetchPositionDetiles.push(response.data[i]);
+            }
+        });
+    }
+
+    $scope.SubmitData = function () {
+
+        $scope.tempSaveArray = [];
+        var Username = $scope.ngUsername;
+        var Name = $scope.ngName;
+        var JoiningDate = $scope.ngJoiningDate;
+        var Position = $scope.ngPosition;
+        var FatherName = $scope.ngFatherName;
+        var timeSheetdata = {
+            DateWorked: dateval,
+            ProjectHoursWorked: txtboxval,
+            TimesheetPeriodid: TimeSheetID
+        }
+        $scope.tempSaveArray.push(timeSheetdata);
+
+        var TimeSheetarray = $scope.tempSaveArray;
+        EmployeeFactory.PostServiceCall(urlpro + '/SaveCWRData/', TimeSheetarray).then(function (response) {
+        });
+
+    }
+
+
+}]);
+
+
+
+EmployeeModule.directive("datepicker", function () {
+
+
+    return {
+
+        restrict: "A",
+        require: "ngModel",
+        link: function (scope, elem, attrs, ngModelCtrl) {
+            var updateModel = function (dateText) {
+
+                $('#spndtvalid').html("");
+                // call $apply to bring stuff to angular model
+                //scope.$apply(function () {
+
+                //    ngModelCtrl.$setViewValue(dateText);
+                _startdate = dateText;
+                //});
+                // var a = _enddate.split('/');
+                var a = $('#end_date').val().split('/');
+                var b = dateText.split('/');
+                if ($('#end_date').val() != "") {
+                    if (new Date(a[2], a[1], a[0]) < new Date(b[2], b[1], b[0])) {
+                        //if ((_enddate < dateText)) {
+                        //scope.$apply(function () {
+                        //    //ngModelCtrl.$setViewValue(dateText);
+                        //});
+                        // alert(_enddate);
+                        $('#end_date').val("");
+                        // $scope.IsVisible = true;
+                        $('#spndtvalid').html("End Date should be greater than Start Date.");
+                    }
+                    else {
+
+                        // $('#end_date').val("");
+                        //ngModelCtrl.$setViewValue("");
+                        // $scope.venddate = "";
+                        //return "";
+                    }
+                }
+            };
+
+            var options = {
+                dateFormat: "dd/mm/yy",
+                // handle jquery date change
+                onSelect: function (dateText) {
+                    updateModel(dateText);
+                }
+            };
+
+            // jqueryfy the element
+            elem.datepicker(options);
+        }
+    }
+
+
+
+
+
+});
+EmployeeModule.directive("datepicker1", function () {
+
+    return {
+        restrict: "A",
+        require: "ngModel",
+        link: function (scope, elem, attrs, ngModelCtrl) {
+            var updateModel = function (dateText) {
+                $('#spndtvalid').html("");
+                _enddate = dateText;
+                // call $apply to bring stuff to angular model
+                // var a = _startdate.split('/');
+                var a = $('#start_date').val().split('/');
+                var b = dateText.split('/');
+                //  alert( $('#start_date').val() + "----" + dateText);
+                // alert(b[0] + "/" + b[1] + "/" + b[2]);
+                if (new Date(a[2], a[1], a[0]) < new Date(b[2], b[1], b[0])) {
+                    //if (_startdate < dateText) {
+                    //scope.$apply(function () {
+                    //    //ngModelCtrl.$setViewValue(dateText);
+                    //});
+                    // alert(55);
+                }
+                else {
+                    // $("#myadd3").multiselect();
+                    $('#end_date').val("");
+                    $('#spndtvalid').html("End Date should be greater than Start Date.");
+                    //ngModelCtrl.$setViewValue("");
+                    // $scope.venddate = "";
+                    //return "";
+                }
+            };
+
+            var options = {
+                dateFormat: "dd/mm/yy",
+                // handle jquery date change
+                onSelect: function (dateText) {
+                    // if (StationeryFactory.ConvertToDate(_startdate) < StationeryFactory.ConvertToDate(dateText)) {
+                    //if (_startdate < dateText) {
+                    updateModel(dateText);
+                    //}kk
+                    // else {
+                    // alert("End Date should be greater than Start Date.");
+                    // }
+                }
+            };
+
+            // jqueryfy the element
+            elem.datepicker(options);
+        }
+    }
+});

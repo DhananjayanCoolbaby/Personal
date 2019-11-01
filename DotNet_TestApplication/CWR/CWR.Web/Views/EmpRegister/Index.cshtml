@@ -1,0 +1,501 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>KONE | Form CWR</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css" />
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style-metro.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch-metro.css"
+          rel="stylesheet" type="text/css" />
+
+
+  
+
+
+    <!-- END PAGE LEVEL STYLES -->
+
+
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/EmpRegisterController.js"></script>
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script>
+        var urlpro = "@Url.Content("~/EmpRegister")";
+
+
+    </script>
+    <style>
+        /*.ui-datepicker-calendar {
+            display: none;
+        }*/
+        .ui-datepicker-calendar {
+            display: none;
+        }
+
+        .modal {
+            position: fixed;
+            top: 25%;
+            left: 35%;
+            z-index: 1050;
+            width: 924px;
+            margin-left: -263px;
+            background-color: #fff;
+            border: 1px solid #999;
+            border: 1px solid rgba(0,0,0,0.3);
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding-box;
+            background-clip: padding-box;
+        }
+
+        .icon-remove-sign {
+            display: block !important;
+        }
+
+
+
+
+
+
+        input.cmn-toggle-round + label {
+            padding: 5px;
+            width: 43px;
+            height: 9px;
+            background-color: #dddddd;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            -ms-border-radius: 30px;
+            -o-border-radius: 30px;
+            border-radius: 30px;
+        }
+
+            input.cmn-toggle-round + label:before, input.cmn-toggle-round + label:after {
+                display: block;
+                position: absolute;
+                top: 1px;
+                left: 1px;
+                bottom: 1px;
+                content: "";
+            }
+
+            input.cmn-toggle-round + label:before {
+                right: 1px;
+                background-color: #f1f1f1;
+                -webkit-border-radius: 30px;
+                -moz-border-radius: 30px;
+                -ms-border-radius: 30px;
+                -o-border-radius: 30px;
+                border-radius: 30px;
+                -webkit-transition: background 0.4s;
+                -moz-transition: background 0.4s;
+                -o-transition: background 0.4s;
+                transition: background 0.4s;
+            }
+
+            input.cmn-toggle-round + label:after {
+                width: 20px;
+                background-color: #fff;
+                -webkit-border-radius: 100%;
+                -moz-border-radius: 100%;
+                -ms-border-radius: 100%;
+                -o-border-radius: 100%;
+                border-radius: 100%;
+                -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                -webkit-transition: margin 0.4s;
+                -moz-transition: margin 0.4s;
+                -o-transition: margin 0.4s;
+                transition: margin 0.4s;
+            }
+
+        input.cmn-toggle-round:checked + label:before {
+            background-color: #8ce196;
+        }
+
+        input.cmn-toggle-round:checked + label:after {
+            margin-left: 30px;
+        }
+
+        .cmn-toggle {
+            position: absolute;
+            margin-left: -9999px;
+            visibility: hidden;
+        }
+
+            .cmn-toggle + label {
+                display: block;
+                position: relative;
+                cursor: pointer;
+                outline: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+    </style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed" data-ng-app="EmployeeModule" data-ng-controller="EmpRegisterController">
+
+    <input type="hidden" id="Username" data-ng-model="ngModelUsername" ng-value=@ViewBag.AssociateId>
+    <input type="hidden" id="Userlevel" data-ng-model="ngModelUserlevel" ng-value="@ViewBag.AssociateId">
+    <div class="header navbar navbar-inverse navbar-fixed-top">
+        <!-- BEGIN TOP NAVIGATION BAR -->
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <!-- BEGIN LOGO -->
+                <a class="brand" href="index.html">
+                    @*<img src="assets/img/logo.png" alt="logo" />*@
+                </a>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                    <img src="assets/img/menu-toggler.png" alt="" />
+                </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <ul class="nav pull-right"></ul>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+        </div>
+        <!-- END TOP NAVIGATION BAR -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container row-fluid">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar nav-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu">
+                <li>
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler hidden-phone"></div>
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                </li>
+
+
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-cogs"></i>
+                        <span class="title">Layouts</span>
+                        <span class="arrow "></span>
+                    </a>
+
+                </li>
+                <!-- BEGIN FRONT DEMO -->
+                <!-- END FRONT DEMO -->
+
+                <li class="active ">
+                    <a href="javascript:;">
+                        <i class="icon-table"></i>
+                        <span class="title">Form Stuff</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+
+                        <li>
+                            <a href="" ng-click="RedirectToADDCWR()">
+                                Add CWR
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" ng-click="RedirectToVendor()">Add Vendor </a>
+
+
+                        </li>
+                        <li>
+                            <a href="" ng-click="RedirectToReporting()">
+                                Add Reporting
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="" ng-click="RedirectToEmpRegister()">
+                                View CWR TimeSheet
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN PAGE -->
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div id="portlet-config" class="modal hide">
+                <div class="modal-header">
+                    <button data-dismiss="modal" class="close" type="button"></button>
+                    <p>Saved CWR ID's</p>
+                </div>
+                <div class="modal-body" data-ng-init="TS_Getsavedcwrdetailes()">
+
+
+                    <table class="table table-striped table-bordered table-hover dataTable">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Name</th>
+                                <th>Joining Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="gradeX odd" data-ng-repeat=" cwrdata in savedcwrdetailes ">
+                                <td> <a ng-href="" ng-click=" rebindingcwrdata(cwrdata.UserName);" style="cursor:pointer">{{cwrdata.UserName}} </a> </td>
+                                <td>{{cwrdata.Name}}</td>
+                                <td>{{cwrdata.JoiningDate}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE CONTAINER-->
+            <div class="container-fluid">
+                <!-- BEGIN PAGE HEADER-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <!-- BEGIN STYLE CUSTOMIZER -->
+                        <div class="color-panel hidden-phone">
+
+
+                        </div>
+                        <!-- END BEGIN STYLE CUSTOMIZER -->
+                        <h3 class="page-title"></h3>
+
+                    </div>
+                </div>
+                <!-- END PAGE HEADER-->
+                <!-- BEGIN PAGE CONTENT-->
+                <div class="content-wrapper">
+                    <div class="content">
+                        <div class="panel panel-flat">
+                            <div class="panel-body">
+                                <div class="padzero col-lg-12">
+                                    <div class="control-group">
+
+                                        @*<div class="controls">*@
+                                        @*<div class="switch" data-on-label="
+                                                <i class='icon-ok icon-white'></i>" data-off-label="<i class='icon-remove'></i>">
+                                                <input type="checkbox" checked class="toggle" />
+                                            </div>*@
+                                        @*</div>*@
+                                        <div class="controls">
+                                            <span>
+                                                Select the Month
+                                                <input class="m-wrap" size="16" data-ng-model="vstartdate" type="text" id="ui_date_picker_change_year_month" /><i data-ng-click="PickDataBasedOnDate()" class="glyphicons no-js search"></i>
+                                            </span>
+                                            <span><a href="#" class="glyphicons no-js search"><i></i>search</a></span>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="padzero col-lg-6 m-b-10">
+                                        <div class="col-lg-8">
+                                            <button id="exportButton" class="btn btn-lg btn-danger clearfix"><span class="fa fa-file-excel-o"></span> Export to Excel</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 m-b-10 table-responsive" data-ng-init="GetAllCWRRegister(); GetAllMonthDate()">
+                                    <table id="example" class="table table-striped table-bordered dataTable">
+                                        <thead>
+                                            <tr data-ng-repeat=" getData in GetMonthDate">
+                                                <td></td>
+                                                <td>{{getData.CWRID}}</td>
+                                                <td>{{getData.first}} </td>
+                                                <td>{{getData.second}}</td>
+                                                <td>{{getData.third}}</td>
+                                                <td>{{getData.fourth}} </td>
+                                                <td>{{getData.fifth}} </td>
+                                                <td>{{getData.sixth}} </td>
+                                                <td>{{getData.seventh}}</td>
+                                                <td>{{getData.eighth}} </td>
+                                                <td>{{getData.ninth}} </td>
+                                                <td>{{getData.tenth }}</td>
+                                                <td>{{getData.eleventh}} </td>
+                                                <td> {{getData.twelfth}}</td>
+                                                <td>{{getData.thirteenth}} </td>
+                                                <td> {{getData.fourteenth}} </td>
+                                                <td>{{getData.fifteenth}}</td>
+                                                <td> {{getData.sixteenth }}</td>
+                                                <td>{{getData.seventeenth }}</td>
+                                                <td>{{getData.eighteenth}} </td>
+                                                <td>{{getData.nineteenth}}</td>
+                                                <td> {{getData.twentieth }}</td>
+                                                <td>{{getData.twentyfirst }}</td>
+                                                <td> {{getData.twentysecond}} </td>
+                                                <td> {{getData.twentythird}} </td>
+                                                <td> {{getData.twentyfourth}}</td>
+                                                <td> {{getData.twentyfifth}}</td>
+                                                <td>{{getData.twentysixth}}</td>
+                                                <td>{{getData.twentyseventh}}</td>
+                                                <td>{{getData.twentyeighth}} </td>
+                                                <td>{{getData.twentyninth}}</td>
+                                                <td>{{getData.thirtieth}}</td>
+                                                <td> {{getData.thirtyfirst }}</td>
+                                                <td>Action</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-ng-repeat=" Data in GetAllCWRRegisterDetails ">
+
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{Data.CWRID}}</td>
+                                                <td>{{Data.first}} </td>
+                                                <td>{{Data.second}}</td>
+                                                <td>{{Data.third}}</td>
+                                                <td>{{Data.fourth}} </td>
+                                                <td>{{Data.fifth}} </td>
+                                                <td>{{Data.sixth}} </td>
+                                                <td>{{Data.seventh}}</td>
+                                                <td>{{Data.eighth}} </td>
+                                                <td>{{Data.ninth}} </td>
+                                                <td>{{Data.tenth }}</td>
+                                                <td>{{Data.eleventh}} </td>
+                                                <td> {{Data.twelfth}}</td>
+                                                <td>{{Data.thirteenth}} </td>
+                                                <td> {{Data.fourteenth}} </td>
+                                                <td>{{Data.fifteenth}}</td>
+                                                <td> {{Data.sixteenth }}</td>
+                                                <td>{{Data.seventeenth }}</td>
+                                                <td>{{Data.eighteenth}} </td>
+                                                <td>{{Data.nineteenth}}</td>
+                                                <td> {{Data.twentieth }}</td>
+                                                <td>{{Data.twentyfirst }}</td>
+                                                <td> {{Data.twentysecond}} </td>
+                                                <td> {{Data.twentythird}} </td>
+                                                <td> {{Data.twentyfourth}}</td>
+                                                <td> {{Data.twentyfifth}}</td>
+                                                <td>{{Data.twentysixth}}</td>
+                                                <td>{{Data.twentyseventh}}</td>
+                                                <td>{{Data.twentyeighth}} </td>
+                                                <td>{{Data.twentyninth}}</td>
+                                                <td>{{Data.thirtieth}}</td>
+                                                <td> {{Data.thirtyfirst }}</td>
+
+                                                <td class="switch">
+                                                    <input id="cmn-toggle-{{Data.CWRID}}" data-ng-value="{{Data.CWRID}}" data-ng-model="CWRID"
+                                                           data-ng-change="Recheckattendance(Data.CWRID)" class="cmn-toggle cmn-toggle-round" type="checkbox">
+                                                    <label for="cmn-toggle-{{Data.CWRID}}">
+                                                    </label>
+                                                </td>
+                                                @*<td class="icon-remove-sign" data-ng-value="{{Data.CWRID}}" data-ng-model="rejactedCWRID" data-ng-click="Recheckattendance(Data.CWRID)"></td>*@
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+            <!-- END PAGE CONTAINER-->
+        </div>
+        <!-- END PAGE -->
+    </div>
+    <!-- END PAGE -->
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="footer">
+        <div class="footer-inner">
+
+        </div>
+        <div class="footer-tools">
+            <span class="go-top">
+                <i class="icon-angle-up"></i>
+            </span>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="assets/plugins/excanvas.min.js"></script>
+    <script src="assets/plugins/respond.min.js"></script>
+    <![endif]-->
+    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script type="text/javascript" src="assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+    <!--<script type="text/javascript" src="assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>-->
+    <script type="text/javascript" src="assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <!--<script type="text/javascript" src="assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>-->
+    <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
+
+
+
+   
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="assets/scripts/app.js"></script>
+    <script src="assets/scripts/ui-jqueryui_Emp.js"></script>
+    <script src="assets/scripts/form-wizard.js"></script>
+    
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        jQuery(document).ready(function () {
+            // initiate layout and plugins
+            App.init();
+            UIJQueryUIEmp.init();
+            
+
+
+        });
+    </script>
+
+
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

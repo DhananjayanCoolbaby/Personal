@@ -1,0 +1,41 @@
+﻿
+
+
+EmployeeModule.controller("TimeSheetController", ["$scope", "$http", "EmployeeFactory", function ($scope, $http, EmployeeFactory) {
+
+    $scope.FetchDateDetails = [];
+    EmployeeFactory.PostServiceCall(urlpro + '/FetchDateDetails/').then(function (response) {
+        debugger;
+
+        for (i = 0; i < response.data.length; ++i) {
+
+
+            $scope.FetchDateDetails.push(response.data[i]);
+
+        }
+
+    });
+
+
+    $scope.SubmitTimeSheet = function () {
+
+
+    }
+    $scope.TimeList = [];
+    $scope.SaveTime = function () {
+        debugger;
+        var txtboxval = $scope.txtboxval;
+        var dateval = $('#date_' + txtboxval).val();
+        var TimeSavedata = {
+            Date: dateval,
+            TimeSheetVal: TimevalListsave.TimeSheetVal
+
+        }
+
+
+        var Pocarray = $scope.tempSaveArray;
+    }
+
+
+
+}]);

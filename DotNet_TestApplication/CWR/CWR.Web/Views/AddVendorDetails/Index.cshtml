@@ -1,0 +1,425 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login </title>
+    <link href="~/Content/custom-style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    @*<script src="~/Scripts/angular.js"></script>*@
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.google.com/uds/api/visualization/1.0/40ff64b1d9d6b3213524485974f36cc0/format+en,default+en,ui+en,corechart+en.I.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script>
+        var urlpro = "@Url.Content("~/AddVendorDetails")";
+
+
+    </script>
+    <style>
+        .modal {
+            position: fixed;
+            top: 25%;
+            left: 35%;
+            z-index: 1050;
+            width: 924px;
+            margin-left: -263px;
+            background-color: #fff;
+            border: 1px solid #999;
+            border: 1px solid rgba(0,0,0,0.3);
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding-box;
+            background-clip: padding-box;
+        }
+    </style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed" data-ng-app="EmployeeModule" data-ng-controller="AddVendorDetails">
+
+    <input type="hidden" id="Username" data-ng-model="ngModelUsername" ng-value=@ViewBag.AssociateId>
+    <input type="hidden" id="Userlevel" data-ng-model="ngModelUserlevel" ng-value="@ViewBag.AssociateId">
+    <div class="header navbar navbar-inverse navbar-fixed-top">
+        <!-- BEGIN TOP NAVIGATION BAR -->
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <!-- BEGIN LOGO -->
+                <a class="brand" href="index.html">
+                    @*<img src="assets/img/logo.png" alt="logo" />*@
+                </a>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                    <img src="assets/img/menu-toggler.png" alt="" />
+                </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <ul class="nav pull-right"></ul>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+        </div>
+        <!-- END TOP NAVIGATION BAR -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container row-fluid">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar nav-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu">
+                <li>
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler hidden-phone"></div>
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                </li>
+
+
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-cogs"></i>
+                        <span class="title">Layouts</span>
+                        <span class="arrow "></span>
+                    </a>
+
+                </li>
+                <!-- BEGIN FRONT DEMO -->
+                <!-- END FRONT DEMO -->
+
+                <li class="active ">
+                    <a href="javascript:;">
+                        <i class="icon-table"></i>
+                        <span class="title">Form Stuff</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+
+                        <li>
+                            <a ng-click="RedirectToADDCWR()">
+                                Add CWR
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="" ng-click="RedirectToVendor()">
+                                Add Vendor
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" ng-click="RedirectToReporting()">
+                                Add Reporting
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" ng-click="RedirectToEmpRegister()">
+                                View CWR TimeSheet
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN PAGE -->
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div id="portlet-config" class="modal hide">
+                <div class="modal-header">
+                    <button data-dismiss="modal" class="close" type="button"></button>
+                    <p>Saved CWR ID's</p>
+                </div>
+                <div class="modal-body" data-ng-init="TS_GetsavedVendordetailes()">
+
+
+                    <table class="table table-striped table-bordered table-hover dataTable">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Name</th>
+                                <th>Joining Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="gradeX odd" data-ng-repeat=" Vendordata in savedVendordetailes ">
+                                <td> <a ng-href="" ng-click=" rebindingVendorData(Vendordata.VendorID);" style="cursor:pointer">{{Vendordata.Vendorname}} </a> </td>
+                                <td>{{Vendordata.VendorContactNO}}</td>
+                                <td>{{Vendordata.VendorEmail}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE CONTAINER-->
+            <div class="container-fluid">
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="portlet box blue" id="form_wizard_1">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-reorder"></i> Form Wizard - <span class="step-title">Step 1 of 2</span>
+                                </div>
+                                <div class="tools hidden-phone">
+                                    <a href="javascript:;" class="collapse"></a>
+                                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                    <a href="javascript:;" class="reload"></a>
+                                    <a href="javascript:;" class="remove"></a>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <form action="#" class="form-horizontal" id="submit_form">
+                                    <div class="form-wizard">
+
+                                        <div id="bar" class="progress progress-success progress-striped">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="alert alert-error hide">
+                                                <button class="close" data-dismiss="alert"></button>
+                                                You have some form errors. Please check below.
+                                            </div>
+                                            <div class="alert alert-success hide">
+                                                <button class="close" data-dismiss="alert"></button>
+                                                Your form validation is successful!
+                                            </div>
+                                            <div class="tab-pane active" id="tab1">
+                                                <h3 class="block">Provide Vendor account details</h3>
+
+                                                <div class="control-group" data-ng-init="TS_GetVendorID()">
+                                                    <label class="control-label">Vendor Id<span class="">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" name="VendorId" id="VendorId" readonly data-ng-model="ngVendorId" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Vendor name<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngVendorname" name="Vendorname" id="Vendorname" />
+                                                        <span class="help-inline">Provide Vendor name</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Vendor contact person<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" data-ng-model="ngVendorcontactperson" class="span6 m-wrap" name="Vendorcontactperson" id="Vendorcontactperson" />
+                                                        <span class="help-inline">Provide Vendor contact person </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Vendor Contact person Number <span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" data-ng-model="ngVendorContactNO " class="span6 m-wrap" name="VendorContactNO" id="VendorContactNO" />
+                                                        <span class="help-inline">Provide Vendor Contact person Number</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Vendor Contact person Email<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngVendorEmail" name="VendorEmail" id="VendorEmail" />
+                                                        <span class="help-inline">Provide Vendor Contact person Email</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="form-actions clearfix">
+                                            <a id="SubmitData" class="btn green button-submit">
+                                                Submit <i class="m-icon-swapright m-icon-white"></i>
+                                            </a>
+
+                                            <a id="Clear" class="btn green button-submit">
+                                                Clear <i class="m-icon-swapright m-icon-white"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <i class="fa fa-clock-o fa-fw"></i> CUSTOMERS LIST
+                                        </div>
+                                        <!-- /.panel-heading -->
+                                        <div class="panel-body">
+
+                                            @Html.Partial("Partial1");
+                                        </div>
+                                    </div>
+                                    <!-- /.panel-body -->
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+    </div>
+    <!-- END PAGE -->
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="footer">
+        <div class="footer-inner">
+
+        </div>
+        <div class="footer-tools">
+            <span class="go-top">
+                <i class="icon-angle-up"></i>
+            </span>
+        </div>
+    </div>
+
+</body>
+<!-- END BODY -->
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetGetVendorID", "AddVendorDetails")',
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                $("#VendorId").val(response);
+            }
+        });
+
+        $('#Clear').click(function () {
+            debugger;
+            $("#VendorId").val("");
+            $("#VendorContactNO").val("");
+            $("#VendorEmail").val("");
+            $("#Vendorname").val("");
+        })
+        $('body').on('click', 'a.showMore', function (event) {
+
+            var trid = $(this).closest('td').attr('id'); // table row ID
+            var rowindex = $(this).closest('tr').val();
+            var VendorID = {
+                VendorID: trid
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("FetchDataBasedOnVendorID", "AddVendorDetails")',
+                data: JSON.stringify(VendorID),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    var respoData = response.Data.length;;
+                    if (response.Data.length == 1) {
+                        debugger;
+                        $("#VendorId").val(response.Data[0].VendorContactNO);
+                        $("#VendorContactNO").val(response.Data[0].VendorContactNO);
+                        $("#VendorEmail").val(response.Data[0].VendorEmail);
+                        $("#Vendorname").val(response.Data[0].Vendorname);
+
+                    }
+                    else {
+                        window.location.href = "Erro/Index";
+                    }
+                },
+                error: function () {
+                    alert("Something wrong");
+                }
+            });
+        });
+
+        $('body').on('click', 'i.fa-close', function (event) {
+            debugger;
+            var trid = $(this).closest('td').attr('id'); // table row ID
+            var rowindex = $(this).closest('i').val();
+
+            var VendorID = {
+                VendorID: trid
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteVendorDetails", "AddVendorDetails")',
+                data: JSON.stringify(VendorID),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    debugger;
+                    var respoData = response.Data.length;;
+                    if (response.Data.length == 1) {
+                        debugger;
+                        $("#VendorId").val(response.Data[0].VendorContactNO);
+                        $("#VendorContactNO").val(response.Data[0].VendorContactNO);
+                        $("#VendorEmail").val(response.Data[0].VendorEmail);
+                        $("#Vendorname").val(response.Data[0].Vendorname);
+
+                    }
+                    else {
+                        window.location.href = "Erro/Index";
+                    }
+                },
+                error: function () {
+                    alert("Something wrong");
+                }
+            });
+        });
+        $("#SubmitData").click(function () {
+
+            var Vendorname = $("#Vendorname").val();
+            var VendorID = $("#VendorId").val();
+            var VendorEmail = $("#VendorEmail").val();
+            var VendorContactNO = $("#VendorContactNO").val();
+            var VendorDetails = {
+                Vendorname: Vendorname,
+                VendorEmail: VendorEmail,
+                Vendorname: VendorContactNO,
+                VendorID: VendorID
+
+            }
+            debugger;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SaveVendorData", "AddVendorDetails")',
+                data: JSON.stringify(VendorDetails),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    location.reload();
+
+
+                },
+                error: function () {
+                    alert("Something wrong");
+                }
+            });
+        })
+
+    });
+</script>

@@ -1,0 +1,66 @@
+﻿using CWR.BusinessService;
+using CWR.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace CWR.Web.Controllers
+{
+    public class AdminController : Controller
+    {
+
+        private IAdminService AdminService = null;
+
+        public AdminController(IAdminService AdminService)
+        {
+            this.AdminService = AdminService;
+        }
+        //
+        // GET: /Admin/
+        public ActionResult Index()
+        {
+
+            return View();
+        }
+
+        /// <summary>
+        /// The GetState method
+        /// </summary>        
+        /// <returns>return list</returns>        
+        public JsonResult GetState()
+        {
+
+            IList<State> OTimeSheet = this.AdminService.GetState();
+            JsonResult dataResult = new JsonResult();
+            dataResult.Data = OTimeSheet;
+            return dataResult;
+        }
+
+        /// <summary>
+        /// The GetState method
+        /// </summary>        
+        /// <returns>return list</returns>        
+        public JsonResult GetPosition()
+        {
+
+            IList<Position> OTimeSheet = this.AdminService.GetPosition();
+            JsonResult dataResult = new JsonResult();
+            dataResult.Data = OTimeSheet;
+            return dataResult;
+        }
+
+        /// <summary>
+        /// The GetState method
+        /// </summary>        
+        /// <returns>return list</returns>        
+        public int GetPosition(string ngUsername)
+        {
+
+            //int  OTimeSheet = this.AdminService.GetPosition();
+
+            return 0;
+        }
+    }
+}

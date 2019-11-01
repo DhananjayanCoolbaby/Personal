@@ -1,0 +1,231 @@
+﻿using CWR.DataService.DBConnection;
+using CWR.Entity;
+using CWR.Repository;
+using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CWR.DataService
+{
+    public class EmpTimeSheetDataService : IEmpTimeSheetRepository
+    {
+        /// <summary>
+        /// The Get Vendors List method
+        /// </summary>
+        /// <returns>return list</returns>        
+        public IList<TimeSheet> GetDateandDays(String UserName)
+        {
+            UserName = "CWR00001";
+            SqlDatabase sqlConn;
+            DbCommand databaseCommand;
+            List<TimeSheet> DateAndDays = null;
+            try
+            {
+                sqlConn = new SqlDatabase(ConnectionInfo.GetConnectionString);
+                databaseCommand = sqlConn.GetStoredProcCommand("TS_FillMyTimeSheetDetails");
+                databaseCommand.CommandType = CommandType.StoredProcedure;
+                //Parameters
+                sqlConn.AddInParameter(databaseCommand, "@UserName", SqlDbType.VarChar, @UserName);
+                using (IDataReader databaseReader = sqlConn.ExecuteReader(databaseCommand))
+                {
+                    DateAndDays = new List<TimeSheet>();
+                    while (databaseReader.Read())
+                    {
+                        ///// creating object of UnbudgetedLoad class
+                        TimeSheet OTimeSheet = CreateObject.GetObject<TimeSheet>();
+                        OTimeSheet.Date = Convert.ToInt32(databaseReader["Date"]);
+                        OTimeSheet.Days = Convert.ToString(databaseReader["Days"]);
+                        OTimeSheet.DateWorked = Convert.ToString(databaseReader["DateWorked"]);
+                        OTimeSheet.TimesheetPeriodid = Convert.ToInt32(databaseReader["TimesheetPeriodid"]);
+                        OTimeSheet.RequestId = Convert.ToString(databaseReader["RequestId"]);
+                        OTimeSheet.ProjectHoursWorked = Convert.ToString(databaseReader["ProjectHoursWorked"]);
+                        DateAndDays.Add(OTimeSheet);
+                    }
+                }
+
+                return DateAndDays;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConn = null;
+                databaseCommand = null;
+            }
+        }
+
+
+        public int SaveTimevalueDetails(string date, string ProjectHoursWorked, int TimesheetPeriodid, string AssociateID)
+        {
+            AssociateID = "CWR00001";
+            SqlDatabase sqlConn;
+            DbCommand databaseCommand;           
+            int result = 0;           
+            try
+            {
+                sqlConn = new SqlDatabase(ConnectionInfo.GetConnectionString);
+                databaseCommand = sqlConn.GetStoredProcCommand("TS_SaveProjectHours");
+                databaseCommand.CommandType = CommandType.StoredProcedure;
+                sqlConn.AddInParameter(databaseCommand, "@CWRID", SqlDbType.VarChar, AssociateID);
+                sqlConn.AddInParameter(databaseCommand, "@TimesheetPeriodid", SqlDbType.Int, TimesheetPeriodid);
+                sqlConn.AddInParameter(databaseCommand, "@ProjectHoursWorked", SqlDbType.VarChar, ProjectHoursWorked);
+                sqlConn.AddInParameter(databaseCommand, "@Status", SqlDbType.Int, 0);
+                sqlConn.AddInParameter(databaseCommand, "@DateWorked", SqlDbType.VarChar, date);
+                result = sqlConn.ExecuteNonQuery(databaseCommand);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                sqlConn = null;
+                databaseCommand = null;
+            }
+        }
+
+        /// <summary>
+        /// The GetDateandDays  method
+        /// </summary>
+        /// <returns>return list</returns>        
+        public int SaveTimeSheetDetails(DataTable DtTimeSheet, string AssociateID)
+        {
+            AssociateID = "CWR00001";
+            SqlDatabase sqlConn;
+            DbCommand databaseCommand;
+            int result = 0;
+            try
+            {
+                sqlConn = new SqlDatabase(ConnectionInfo.GetConnectionString);
+                databaseCommand = sqlConn.GetStoredProcCommand("TS_SubmitTimesheet");
+                databaseCommand.CommandType = CommandType.StoredProcedure;
+                sqlConn.AddInParameter(databaseCommand, "@dtHoursworked", SqlDbType.Structured, DtTimeSheet);
+                sqlConn.AddInParameter(databaseCommand, "@createdBy", SqlDbType.VarChar, AssociateID);                
+                result = sqlConn.ExecuteNonQuery(databaseCommand);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                sqlConn = null;
+                databaseCommand = null;
+            }
+        }
+
+        /// <summary>
+        /// The Get Vendors List method
+        /// </summary>
+        /// <returns>return list</returns>        
+        public IList<LegendDetails> FetchLegendDetails( )
+        {
+          
+            SqlDatabase sqlConn;
+            DbCommand databaseCommand;
+            List<LegendDetails> oLegendDetails = null;
+            try
+            {
+                sqlConn = new SqlDatabase(ConnectionInfo.GetConnectionString);
+                databaseCommand = sqlConn.GetStoredProcCommand("TS_FetchLegendDetails");
+                databaseCommand.CommandType = CommandType.StoredProcedure;
+                //Parameters
+                
+                using (IDataReader databaseReader = sqlConn.ExecuteReader(databaseCommand))
+                {
+                    oLegendDetails = new List<LegendDetails>();
+                    while (databaseReader.Read())
+                    {
+                        ///// creating object of UnbudgetedLoad class
+                        LegendDetails oLegendDetail = CreateObject.GetObject<LegendDetails>();
+                        oLegendDetail.LegendName = Convert.ToString(databaseReader["LegendName"]);
+                        oLegendDetail.LegendShortName = Convert.ToString(databaseReader["LegendShortName"]);
+                        oLegendDetails.Add(oLegendDetail);
+                    }
+                }
+
+                return oLegendDetails;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConn = null;
+                databaseCommand = null;
+            }
+        }
+
+
+        /// <summary>
+        /// The Get Vendors List method
+        /// </summary>
+        /// <returns>return list</returns>        
+        public IList<TimeSheetSaveedData> GetSavedTimeSheetDetailes(String UserName)
+        {
+            UserName = "CWR00001";
+            SqlDatabase sqlConn;
+            DbCommand databaseCommand;
+            List<TimeSheetSaveedData> DateAndDays = null;
+            try
+            {
+                sqlConn = new SqlDatabase(ConnectionInfo.GetConnectionString);
+                databaseCommand = sqlConn.GetStoredProcCommand("TS_GetSavedTimeSheetDetailes");
+                databaseCommand.CommandType = CommandType.StoredProcedure;
+                //Parameters
+                sqlConn.AddInParameter(databaseCommand, "@UserName", SqlDbType.VarChar, @UserName);
+                using (IDataReader databaseReader = sqlConn.ExecuteReader(databaseCommand))
+                {
+                    DateAndDays = new List<TimeSheetSaveedData>();
+                    while (databaseReader.Read())
+                    {
+                        ///// creating object of UnbudgetedLoad class
+                        TimeSheetSaveedData OTimeSheet = CreateObject.GetObject<TimeSheetSaveedData>();
+                        OTimeSheet.CWRID = Convert.ToInt32(databaseReader["CWRID"]);
+                        OTimeSheet.EndDate = Convert.ToString(databaseReader["EndDate"]);
+                        OTimeSheet.RequestId = Convert.ToString(databaseReader["RequestId"]);
+                        OTimeSheet.Status = Convert.ToInt32(databaseReader["Status"]);
+                        OTimeSheet.CreatedDate = Convert.ToString(databaseReader["CreatedDate"]);
+                        OTimeSheet.ProjectHoursWorked = Convert.ToString(databaseReader["ProjectHoursWorked"]);
+                        DateAndDays.Add(OTimeSheet);
+                    }
+                }
+
+                return DateAndDays;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConn = null;
+                databaseCommand = null;
+            }
+        }
+
+    }
+}

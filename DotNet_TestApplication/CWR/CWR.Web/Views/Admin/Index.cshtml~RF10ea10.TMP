@@ -1,0 +1,682 @@
+﻿@{
+    ViewBag.Title = "TimeSheet";
+}
+@model List<CWR.Entity.TimeSheet>
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>KONE | Form CWR</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" type="text/css" href="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.css" />
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style-metro.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+    <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
+    <link rel="stylesheet" type="text/css" href="assets/plugins/chosen-bootstrap/chosen/chosen.css" />
+    <!-- END PAGE LEVEL STYLES -->
+
+
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Module/EmployeeModule.js"></script>
+    <script src="~/Scripts/Controller/AdminController.js"></script>
+    <script src="~/Scripts/Services/EmployeeServices.js"></script>
+
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script>
+        var urlpro = "@Url.Content("~/Admin")";
+
+
+    </script>
+    <style>
+        .modal {
+            position: fixed;
+            top: 25%;
+            left: 35%;
+            z-index: 1050;
+            width: 924px;
+            margin-left: -263px;
+            background-color: #fff;
+            border: 1px solid #999;
+            border: 1px solid rgba(0,0,0,0.3);
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding-box;
+            background-clip: padding-box;
+        }
+    </style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed" data-ng-app="EmployeeModule" data-ng-controller="AdminController">
+
+    <input type="hidden" id="Username" data-ng-model="ngModelUsername" ng-value=@ViewBag.AssociateId>
+    <input type="hidden" id="Userlevel" data-ng-model="ngModelUserlevel" ng-value="@ViewBag.AssociateId">
+    <div class="header navbar navbar-inverse navbar-fixed-top">
+        <!-- BEGIN TOP NAVIGATION BAR -->
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <!-- BEGIN LOGO -->
+                <a class="brand" href="index.html">
+                    @*<img src="assets/img/logo.png" alt="logo" />*@
+                </a>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                    <img src="assets/img/menu-toggler.png" alt="" />
+                </a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <ul class="nav pull-right"></ul>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+        </div>
+        <!-- END TOP NAVIGATION BAR -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container row-fluid">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar nav-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu">
+                <li>
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler hidden-phone"></div>
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                </li>
+
+
+                <li>
+                    <a href="javascript:;">
+                        <i class="icon-cogs"></i>
+                        <span class="title">Layouts</span>
+                        <span class="arrow "></span>
+                    </a>
+
+                </li>
+                <!-- BEGIN FRONT DEMO -->
+                <!-- END FRONT DEMO -->
+
+                <li class="active ">
+                    <a href="javascript:;">
+                        <i class="icon-table"></i>
+                        <span class="title">Form Stuff</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
+                    </a>
+                    <ul class="sub-menu">
+
+                        <li class="active">
+                            <a href="" ng-click="RediretToADDCWR()">
+
+                                Add CWR
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" ng-click="RedirectToURL()">Add Vendor </a>
+                        </li>
+                        <li>
+                            <a href="" ng-click="RedirectToReporting()">
+                                Add Reporting
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" ng-click="RedirectToEmpRegister()">
+                                View CWR TimeSheet
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN PAGE -->
+        <div class="page-content">
+            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <div id="portlet-config" class="modal hide">
+                <div class="modal-header">
+                    <button data-dismiss="modal" class="close" type="button"></button>
+                    <p>Saved CWR ID's</p>
+                </div>
+                <div class="modal-body" data-ng-init="TS_Getsavedcwrdetailes()">
+
+
+                    <table class="table table-striped table-bordered table-hover dataTable">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Name</th>
+                                <th>Joining Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="gradeX odd" data-ng-repeat=" cwrdata in savedcwrdetailes ">
+                                <td> <a ng-href="" ng-click=" rebindingcwrdata(cwrdata.UserName);" style="cursor:pointer">{{cwrdata.UserName}} </a> </td>
+                                <td>{{cwrdata.Name}}</td>
+                                <td>{{cwrdata.JoiningDate}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+            <!-- BEGIN PAGE CONTAINER-->
+            <div class="container-fluid">
+                <!-- BEGIN PAGE HEADER-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="alert alert-success hide" ng-hide="IssuccessHidden">
+                            <button class="close" data-dismiss="alert"></button>
+                            <strong>Success!</strong> Your <a href="#" class="alert-link">Data</a> has been Saved successfully.
+                        </div>
+                        <h3 class="page-title"></h3>
+
+                    </div>
+                </div>
+                <!-- END PAGE HEADER-->
+                <!-- BEGIN PAGE CONTENT-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="portlet box blue" id="form_wizard_1">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-reorder"></i> Form Wizard - <span class="step-title">Step 1 of 4</span>
+                                </div>
+                                <div class="tools hidden-phone">
+                                    <a href="javascript:;" class="collapse"></a>
+                                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                    <a href="javascript:;" class="reload"></a>
+                                    <a href="javascript:;" class="remove"></a>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <form action="#" class="form-horizontal" id="submit_form">
+                                    <div class="form-wizard">
+                                        <div class="navbar steps">
+                                            <div class="navbar-inner">
+                                                <ul class="row-fluid">
+                                                    <li class="span3">
+                                                        <a href="#tab1" data-toggle="tab" class="step ">
+                                                            <span class="number">1</span>
+                                                            <span class="desc"><i class="icon-ok"></i> Account Setup</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="span3">
+                                                        <a href="#tab2" data-toggle="tab" class="step">
+                                                            <span class="number">2</span>
+                                                            <span class="desc"><i class="icon-ok"></i> Profile Setup</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="span3">
+                                                        <a href="#tab3" data-toggle="tab" class="step active">
+                                                            <span class="number">3</span>
+                                                            <span class="desc"><i class="icon-ok"></i> Vendor Setup</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="span3">
+                                                        <a href="#tab4" data-toggle="tab" class="step">
+                                                            <span class="number">4</span>
+                                                            <span class="desc"><i class="icon-ok"></i> Confirm</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div id="bar" class="progress progress-success progress-striped">
+                                            <div class="bar"></div>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="alert alert-error hide">
+                                                <button class="close" data-dismiss="alert"></button>
+                                                You have some form errors. Please check below.
+                                            </div>
+                                            
+                                            <div class="tab-pane active" id="tab1">
+                                                <h3 class="block">Provide your account details</h3>
+
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Username<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngUsername" name="username" />
+                                                        <span class="help-inline">Provide your username</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Password<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="password" class="span6 m-wrap" name="password" id="submit_form_password" />
+                                                        <span class="help-inline">Provide your username</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Confirm Password<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="password" data-ng-model="ngPassword" class="span6 m-wrap" name="rpassword" />
+                                                        <span class="help-inline">Confirm your password</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">kone Email<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngkoneEmail" name="Kemail" />
+                                                        <span class="help-inline">Provide your email address</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Reporting to<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select name="Reporting" id="ReportingID" class="span6" data-ng-model="ngReporting" data-ng-init="GetReporting()">
+                                                            <option disabled selected value="">--Select--</option>
+                                                            <option ng-repeat="Reporting in FetchReportingDetiles" value="{{Reporting.ReportingID}}">{{Reporting.ReportingName}}</option>
+                                                        </select>
+                                                        <span class="help-inline">Provide Reporting to</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Vendor<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select name="Vendor" id="VendorID" class="span6" data-ng-model="ngVendor" data-ng-init="GetVendor()">
+                                                            <option disabled selected value="">--Select--</option>
+                                                            <option ng-repeat="Vendor in FetchVendorDetiles" value="{{Vendor.ID}}">{{Vendor.Name}}</option>
+                                                        </select>
+                                                        <span class="help-inline">Provide Vendor</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Position<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select name="Position" id="PositionID" class="span6" ng-model="ngPosition" data-ng-init="GetPosition()">
+                                                            <option disabled selected value="">--Select--</option>
+                                                            <option ng-repeat="Position in FetchPositionDetiles" value="{{Position.ID}}">{{Position.Name}}</option>
+                                                        </select>
+                                                        <span class="help-inline">Provide Position</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="tab2">
+                                                <h3 class="block">Provide CWR profile details</h3>
+                                                <div class="control-group">
+                                                    <label class="control-label">First name<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngfName" name="Firstname" />
+                                                        <span class="help-inline">Provide your First name</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Last name<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="nglName" name="Lastname" />
+                                                        <span class="help-inline">Provide your Last name</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">DOB<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input class="m-wrap" size="16" name="DOB" data-ng-model="ngDOB" type="text" value="" id="ui_date_picker_change_year_month" /><span class="add-on"><i class="icon-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Father Name<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngFatherName" name="FatherName1" />
+                                                        <span class="help-inline">Provide your Father Name</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Phone Number<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngMobileNo" name="phone" />
+                                                        <span class="help-inline">Provide your phone number</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Gender<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <select class="form-control" required data-ng-model="ngGender" name="Gender">
+                                                            <option disabled selected value="">--Select--</option>
+                                                            <option value="M">Male</option>
+                                                            <option value="F">Female</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Address<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngAddress" name="address" />
+                                                        <span class="help-inline">Provide your street address</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">City/Town<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngcityorTown" name="city" />
+                                                        <span class="help-inline">Provide your city or town</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">State</label>
+                                                    <div class="controls">
+                                                        <select name="State" id="StateID" class="span6" required data-ng-model="ngState" data-ng-init="GetState()">
+                                                            <option disabled selected value="">--Select--</option>
+                                                            <option ng-repeat="state in FetchStateDetiles" value="{{state.ID}}">{{state.Name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Remarks</label>
+                                                    <div class="controls">
+                                                        <textarea class="span6 m-wrap" rows="3" data-ng-model="ngRemarks" name="remarks"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="tab3">
+                                                <h3 class="block">Vendor Setup</h3>
+
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Personal Email Address<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngpEmail" name="PEmail" />
+                                                        <span class="help-inline">Provide your Personal Email Address</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Emergency contact number<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngEmergencyNo" name="EConNo" />
+                                                        <span class="help-inline">Provide your Emergency contact number</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Employee id<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngEmpID" name="EmpID" />
+                                                        <span class="help-inline">Provide Employee id</span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Joining Date<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input class="m-wrap" size="16" data-ng-model="ngJoiningDate" name="JoiningDate" type="text" value="" id="ui_date_picker_change_year_month_Joining" /><span class="add-on"><i class="icon-calendar"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Reporting date<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input class="m-wrap" size="16" name="ReportingDate" type="text" data-ng-model="ngReportingDate" value="" id="ui_date_picker_change_year_month_Reporting" /><span class="add-on"><i class="icon-calendar"></i></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Employeer Email Address:<span class="required">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6 m-wrap" data-ng-model="ngempEmail" name="EmpEmailID" />
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane" id="tab4">
+                                                <h4 class="block">Confirm CWR account</h4>
+                                                <h4 class="form-section">Account</h4>
+                                                <div class="control-group">
+                                                    <label class="control-label">Username:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="username"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Password:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Password"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">kone Email:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Kemail"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Reporting:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Reporting"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Vendor:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Vendor"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Position:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Position"></span>
+                                                    </div>
+                                                </div>
+
+
+                                                <h4 class="form-section">Profile</h4>
+                                                <div class="control-group">
+                                                    <label class="control-label">First name:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Firstname"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Last name:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Lastname"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">DOB:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="DOB"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Father Name:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="FatherName"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Phone Number:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="phone"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Gender:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="Gender"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Address:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="address"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">City/Town:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="city"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">State:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="State"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Remarks:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="remarks"></span>
+                                                    </div>
+                                                </div>
+                                                <h4 class="form-section">Billing</h4>
+                                                <div class="control-group">
+                                                    <label class="control-label">Personal Email Address:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="PEmail"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Emergency contact number:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="EConNo"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Employee id:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="EmpID"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Joining Date:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="JoiningDate"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label">Reporting date:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="ReportingDate"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label">Employeer Email Address:</label>
+                                                    <div class="controls">
+                                                        <span class="text display-value" data-display="EmpEmailID"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions clearfix">
+                                            <a href="javascript:;" class="btn button-previous">
+                                                <i class="m-icon-swapleft"></i> Back
+                                            </a>
+                                            <a href="javascript:;" class="btn blue button-next">
+                                                Continue <i class="m-icon-swapright m-icon-white"></i>
+                                            </a>
+                                            <a data-ng-click="SubmitData();" class="btn green button-submit">
+                                                Submit <i class="m-icon-swapright m-icon-white"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+            <!-- END PAGE CONTAINER-->
+        </div>
+        <!-- END PAGE -->
+    </div>
+    <!-- END PAGE -->
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="footer">
+        <div class="footer-inner">
+
+        </div>
+        <div class="footer-tools">
+            <span class="go-top">
+                <i class="icon-angle-up"></i>
+            </span>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="assets/plugins/excanvas.min.js"></script>
+    <script src="assets/plugins/respond.min.js"></script>
+    <![endif]-->
+    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script type="text/javascript" src="assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+    <!--<script type="text/javascript" src="assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>-->
+    <script type="text/javascript" src="assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <!--<script type="text/javascript" src="assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>-->
+    <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="assets/scripts/app.js"></script>
+    <script src="assets/scripts/ui-jqueryui.js"></script>
+    <script src="assets/scripts/form-wizard.js"></script>
+
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        jQuery(document).ready(function () {
+            // initiate layout and plugins
+            App.init();
+            UIJQueryUI.init();
+            FormWizard.init();
+        });
+    </script>
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

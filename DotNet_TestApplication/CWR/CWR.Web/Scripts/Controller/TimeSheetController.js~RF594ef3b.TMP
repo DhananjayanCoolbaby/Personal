@@ -1,0 +1,229 @@
+﻿
+
+
+EmployeeModule.controller("TimeSheetController", ["$scope", "$http", "EmployeeFactory", function ($scope, $http, EmployeeFactory) {
+
+    $scope.FetchDateDetails = [];
+    EmployeeFactory.PostServiceCall(urlpro + '/FetchDateDetails/').then(function (response) {
+
+        for (i = 0; i < response.data.length; ++i) {
+            $scope.FetchDateDetails.push(response.data[i]);
+            //$scope.ddlSelectVal = $scope.FetchDateDetails[i].ProjectHoursWorked;
+        }
+    });
+    $scope.FetchLegendDetails = [];
+    EmployeeFactory.PostServiceCall(urlpro + '/FetchLegendDetails/').then(function (response) {
+        for (i = 0; i < response.data.length; ++i) {
+            $scope.FetchLegendDetails.push(response.data[i]);
+        }
+    });
+
+    $scope.TS_GetSavedTimeSheetDetailes = function () {
+        $scope.SavedTimeSheetDetailes = [];
+        EmployeeFactory.PostServiceCall(urlpro + '/GetSavedTimeSheetDetailes/').then(function (response) {
+
+            for (i = 0; i < response.data.length; ++i) {
+                $scope.SavedTimeSheetDetailes.push(response.data[i]);
+            }
+        });
+    };
+
+
+
+    var pocvalListsave = $scope.Poclist;
+
+    $scope.SubmitTimeSheet = function () {
+
+        $scope.tempSaveArray = [];
+        var lentextbox = $scope.FetchDateDetails.length;
+        for (var i = 0; i < lentextbox; i++) {
+            var strval = $scope.FetchDateDetails[i].Date;
+            var txtboxval = $('#timeval_' + strval).val();
+            var dateval = $('#date_' + strval).data("date");
+            var TimeSheetID = $('#date_' + strval).data("timesheetperiodid");
+            var timeSheetdata = {
+                DateWorked: dateval,
+                ProjectHoursWorked: txtboxval,
+                TimesheetPeriodid: TimeSheetID
+            }
+            $scope.tempSaveArray.push(timeSheetdata);
+        }
+        var TimeSheetarray = $scope.tempSaveArray;
+        EmployeeFactory.PostServiceCall(urlpro + '/SaveTimeSheetDetails/', TimeSheetarray).then(function (response) {
+        });
+
+
+    }
+    $scope.TimeList = [];
+    $scope.SaveTime = function (date) {
+
+        var txtboxval = $('#timeval_' + date).val();
+
+        var dateval = $('#date_' + date).data("date");
+        var TimeSheetID = $('#date_' + date).data("timesheetperiodid");
+
+        // var date = dateval.split("-");
+        var TimeSavedata = {
+            Date: dateval,
+            ProjectHoursWorked: txtboxval,
+            TimesheetPeriodid: TimeSheetID
+        }
+        EmployeeFactory.PostServiceCall(urlpro + '/SavedaybydateTime/', TimeSavedata).then(function (response) {
+
+        });
+    }
+
+    $scope.RebindingTimeSheetData = function (RequestId) {
+
+        var ReqID = { RequestId: RequestId }
+
+        EmployeeFactory.PostServiceCall(urlpro + '/FetchDataBasedOnRequestId/', ReqID).then(function (response) {
+
+            $scope.FetchDateDetails.length = 0;
+            for (i = 0; i < response.data.length; ++i) {
+
+                $scope.FetchDateDetails.push(response.data[i]);
+
+            }
+        });
+    }
+
+    $scope.PickDataBasedOnDate = function (date) {
+        alert(date);
+        var ReqDate = { Date: date }
+        EmployeeFactory.PostServiceCall(urlpro + '/FetchDataBasedOnDate/', ReqDate).then(function (response) {
+
+            $scope.FetchDateDetails.length = 0;
+            for (i = 0; i < response.data.length; ++i) {
+
+                $scope.FetchDateDetails.push(response.data[i]);
+
+            }
+        });
+    }
+
+
+    $scope.vstartdate;
+    $scope.$watch("vstartdate", function (newValue, oldValue) {
+        alert(12);
+        console.log("I've changed : ", oldValue);
+    });
+
+}]);
+
+
+//$(function () {
+//    $('.date-picker').datepicker({
+//        changeMonth: true,
+//        changeYear: false,
+//        showButtonPanel: false,
+//        dateFormat: 'MM yy',
+//        endDate: '+0d',
+//        autoclose: true,
+//        onClose: function (dateText, inst) {
+//            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+//        }
+//    });
+//});
+
+//EmployeeModule.directive("datepicker", function () {
+//    return {
+//        restrict: "A",
+//        require: "ngModel",
+//        link: function (scope, elem, attrs, ngModelCtrl) {
+//            var updateModel = function (dateText) {
+
+//                $('#spndtvalid').html("");
+//                // call $apply to bring stuff to angular model
+//                //scope.$apply(function () {
+
+//                //    ngModelCtrl.$setViewValue(dateText);
+//                _startdate = dateText;
+//                //});
+//                // var a = _enddate.split('/');
+//                var a = $('#start_date').val().split('/');
+//                var b = dateText.split('/');
+//                if ($('#start_date').val() != "") {
+//                    if (new Date(a[2], a[1], a[0]) < new Date(b[2], b[1], b[0])) {
+//                        //if ((_enddate < dateText)) {
+//                        //scope.$apply(function () {
+//                        //    //ngModelCtrl.$setViewValue(dateText);
+//                        //});
+//                        // alert(_enddate);
+//                        $('#start_date').val("");
+
+//                    }
+//                    else {
+
+//                        // $('#end_date').val("");
+//                        //ngModelCtrl.$setViewValue("");
+//                        // $scope.venddate = "";
+//                        //return "";
+//                    }
+//                }
+//            };
+
+//            var options = {
+//                dateFormat: 'MM yy',
+//                changeMonth: true,
+//                changeYear: false,
+//                showButtonPanel: false,
+
+//                // handle jquery date change
+//                onClose: function (dateText, inst) {
+//                    $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+//                }
+//            };
+
+//            // jqueryfy the element
+//            $(elem).datepicker(options);
+//        }
+//    }
+
+
+
+
+
+//});
+
+
+//EmployeeModule.directive("datepicker", function () {
+//    return {
+//        restrict: 'A',
+//        require: 'ngModel',
+//        link: function (scope, elem, attrs, ngModelCtrl) {
+//            $(elem).datepicker({
+//                dateFormat: 'MM yy',
+//                changeMonth: true,
+//                changeYear: false,
+//                showButtonPanel: false,
+//                onClose: function (dateText, inst) {
+//                    $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+//                },
+//                onSelect: function (date) {
+//                    scope.vstartdate = date;
+//                    scope.$apply();
+//                }
+//            });
+
+//        }
+//    };
+//});
+
+
+$(document).ready(function () {
+    $('.datepicker').datepicker({
+        dateFormat: 'MM yy',
+        changeMonth: true,
+        changeYear: false,
+        showButtonPanel: false,
+    })
+    //Listen for the change even on the input
+    .change(dateChanged)
+    .on('changeDate', dateChanged);
+});
+
+function dateChanged(ev) {
+    $(this).datepicker('hide');
+    alert(12);
+}

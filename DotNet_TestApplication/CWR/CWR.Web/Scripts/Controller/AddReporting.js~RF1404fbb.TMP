@@ -1,0 +1,47 @@
+﻿EmployeeModule.controller("AddReporting", ["$scope", "$http", "EmployeeFactory", function ($scope, $http, EmployeeFactory) {
+
+    $scope.SubmitData = function () {
+        debugger;
+        var oReportername = $scope.ngReportername;
+        var oReporterContactNO = $scope.ngReporterContactNO;
+        var oReporterEmail = $scope.ngReporterEmail;
+        var ReporterData = {
+            Reportername: oVendorname,
+            ReporterContactNO: oVendorContactNO,
+            ReporterEmail: oVendorEmail
+        }
+        EmployeeFactory.PostServiceCall(urlpro + '/SaveReporterData/', ReporterData).then(function (response) {
+            $scope.SusMessage = "Data has been Saved successfully";
+            $scope.alertsuccess = false;
+            $scope.TS_GetsavedVendordetailes();
+        });
+    }
+
+    $scope.RedirectToADDCWR = function () {
+        debugger;
+        var UserID = "admin";
+        var Userlevel = "l1";
+        window.location.href = "Admin?Username=" + UserID + '&Userlevel=' + Userlevel;
+    };
+    $scope.RedirectToVendor = function () {
+        debugger;
+        var UserID = "admin";
+        var Userlevel = "l1";
+        window.location.href = "AddVendorDetails";
+    };
+    $scope.RedirectToReporting = function () {
+        debugger;
+        var UserID = "admin";
+        var Userlevel = "l1";
+        window.location.href = "AddReporting";
+    };
+
+    $scope.TS_GetVendorID = function () {
+        EmployeeFactory.PostServiceCall(urlpro + '/GetReportingID/').then(function (response) {
+            for (i = 0; i < response.data.length; ++i) {
+                $scope.ngVendorId = response.data[i];
+            }
+        });
+    };
+
+}]);
